@@ -1,12 +1,23 @@
 <?php
 $apiKey = "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";
 
+// print_r($_POST);
+
+if (!strlen($_POST['irp'])) {
+  // No content to post to API
+  header( 'location: /index.php?error=1' );
+  exit();
+}
+
+// echo json_encode($_POST['irp']);
+
+
 $ch = curl_init();
 
 curl_setopt($ch, CURLOPT_URL, 'https://api.openai.com/v1/completions');
 curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
 curl_setopt($ch, CURLOPT_POST, 1);
-curl_setopt($ch, CURLOPT_POSTFIELDS, "{\n  \"model\": \"text-davinci-003\",\n  \"prompt\": \"summerise the following playbook into a list of platform independent objectivesnn[SECTION]nnthe objectives are\",\n  \"temperature\": 0,\n  \"max_tokens\": 500,\n  \"top_p\": 1,\n  \"frequency_penalty\": 0,\n  \"presence_penalty\": 0\n}");
+curl_setopt($ch, CURLOPT_POSTFIELDS, "{\n  \"model\": \"text-davinci-003\",\n  \"prompt\": \"summerise the following playbook into a list of platform independent objectivesnnphotosynthesisnnthe objectives are\",\n  \"temperature\": 0,\n  \"max_tokens\": 500,\n  \"top_p\": 1,\n  \"frequency_penalty\": 0,\n  \"presence_penalty\": 0\n}");
 
 $headers = array();
 $headers[] = 'Content-Type: application/json';
@@ -21,5 +32,6 @@ curl_close($ch);
 
 $result = json_decode($result, true);
 print_r($result);
+// print_r($result['choices'][0]['text']);
 
 ?>

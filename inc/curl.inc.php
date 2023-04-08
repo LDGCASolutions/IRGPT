@@ -54,7 +54,7 @@ if (array_key_exists("error", $result)) {
   // print_r($result["choices"][0]["text"]);
   $_SESSION["obj"] = $result["choices"][0]["text"];
 
-  print_r($_SESSION);
+  // print_r($_SESSION);
 
   // Reload the home page
   header( 'location: /index.php' );

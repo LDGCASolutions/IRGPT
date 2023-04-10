@@ -10,13 +10,16 @@
   ?>
   <section class="error">
     <?php if ($_GET['error']==1) { ?>
-      Empty IRP. Try again.
+      <p>Empty IRP. Try again.</p>
     <?php } elseif ($_GET['error']==2) { ?>
-      No evidence. Try again.
+      <p>No evidence. Try again.</p>
     <?php } elseif ($_GET['error']==3) { ?>
-      Objectives list and/or Task list empty.
+      <p>Objectives list and/or Task list empty.</p>
+    <?php } elseif ($_GET['error']==4) { ?>
+      <p>OpenAI API returned an error.</p>
+      <p><strong><?php echo $_SESSION["error"]; ?></strong></p>
     <?php } else { ?>
-      Unknown Error. Try again.
+      <p>Unknown Error. Try again.</p>
     <?php } ?>
   </section>
   <?php

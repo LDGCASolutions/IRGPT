@@ -58,9 +58,9 @@ if (isset($_GET["opt"]) && $_GET["opt"]==1) {
 
     if (array_key_exists("error", $result)) {
       // OpenAI API returned an error
-      echo "API Error<br>";
-      print_r($result);
-
+      $_SESSION["error"] = $result["error"]["message"];
+      header( 'location: /index.php?error=4' );
+      exit();
     } else {
       echo "GOOD<br>";
       $_SESSION["obj"] = trim($result["choices"][0]["text"]);
@@ -82,8 +82,9 @@ if (isset($_GET["opt"]) && $_GET["opt"]==1) {
 
     if (array_key_exists("error", $result)) {
       // OpenAI API returned an error
-      echo "API Error<br>";
-      print_r($result);
+      $_SESSION["error"] = $result["error"]["message"];
+      header( 'location: /index.php?error=4' );
+      exit();
 
     } else {
       echo "GOOD<br>";
@@ -110,8 +111,9 @@ if (isset($_GET["opt"]) && $_GET["opt"]==1) {
 
     if (array_key_exists("error", $result)) {
       // OpenAI API returned an error
-      echo "API Error<br>";
-      print_r($result);
+      $_SESSION["error"] = $result["error"]["message"];
+      header( 'location: /index.php?error=4' );
+      exit();
 
     } else {
       $_SESSION["completed"] = trim($result["choices"][0]["text"]);
@@ -125,8 +127,9 @@ if (isset($_GET["opt"]) && $_GET["opt"]==1) {
 
       if (array_key_exists("error", $result)) {
         // OpenAI API returned an error
-        echo "API Error<br>";
-        print_r($result);
+        $_SESSION["error"] = $result["error"]["message"];
+        header( 'location: /index.php?error=4' );
+        exit();
 
       } else {
         $_SESSION["missed"] = trim($result["choices"][0]["text"]);

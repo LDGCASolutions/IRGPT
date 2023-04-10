@@ -42,6 +42,7 @@ $apiKey = "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";
 // Option 2 : Analyse responder conversation
 
 $prompt = "";
+$section = "";
 
 if (isset($_GET["opt"]) && $_GET["opt"]==1) {
   echo "Option 1";
@@ -63,6 +64,7 @@ if (isset($_GET["opt"]) && $_GET["opt"]==1) {
     } else {
       echo "GOOD<br>";
       $_SESSION["obj"] = trim($result["choices"][0]["text"]);
+      $section .= "#objectives";
     }
 
   }
@@ -86,6 +88,7 @@ if (isset($_GET["opt"]) && $_GET["opt"]==1) {
     } else {
       echo "GOOD<br>";
       $_SESSION["tasks"] = trim($result["choices"][0]["text"]);
+      $section .= "#tasks";
     }
   }
 
@@ -100,9 +103,9 @@ if (isset($_GET["opt"]) && $_GET["opt"]==1) {
   } else {
     $tasks = preg_replace("/\d+\. /", "-", $_SESSION['tasks']); // Remove numbers from TASK list
     $prompt = "Objectives are\n".$_SESSION['obj']."\n\nTasks performed are\n".$tasks."\n\nFollowing objectives match the tasks performed";
-    echo "\n---------------COMPLETED-----------------\n";
-    echo $prompt;
-    echo "\n-----------------------------------------\n";
+    // echo "\n---------------COMPLETED-----------------\n";
+    // echo $prompt;
+    // echo "\n-----------------------------------------\n";
     $result = curl($prompt);
 
     if (array_key_exists("error", $result)) {
@@ -115,9 +118,9 @@ if (isset($_GET["opt"]) && $_GET["opt"]==1) {
       echo $_SESSION["completed"];
 
       $prompt = "The objectives are\n".$_SESSION["obj"]."\n\nThe tasks performed are\n".$tasks."\n\nFollowing objectives match the tasks performed.\n".$_SESSION["completed"]."\n\nFollowing objectives were missed.";
-      echo "\n---------------MISSED--------------------\n";
-      echo $prompt;
-      echo "\n-----------------------------------------\n";
+      // echo "\n---------------MISSED--------------------\n";
+      // echo $prompt;
+      // echo "\n-----------------------------------------\n";
       $result = curl($prompt);
 
       if (array_key_exists("error", $result)) {
@@ -128,7 +131,7 @@ if (isset($_GET["opt"]) && $_GET["opt"]==1) {
       } else {
         $_SESSION["missed"] = trim($result["choices"][0]["text"]);
         echo $_SESSION["missed"];
-
+        $section .= "#evaluation";
       }
     }
   }
@@ -140,7 +143,7 @@ if (isset($_GET["opt"]) && $_GET["opt"]==1) {
 // print_r($_SESSION); // For testing
 
 // Reload the home page
-header( 'location: /index.php' );
+header( 'location: /index.php'.$section );
 exit();
 
 

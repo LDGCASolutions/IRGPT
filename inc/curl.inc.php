@@ -99,8 +99,10 @@ if (isset($_GET["opt"]) && $_GET["opt"]==1) {
     exit();
   } else {
     $tasks = preg_replace("/\d+\. /", "-", $_SESSION['tasks']); // Remove numbers from TASK list
-    $prompt = "objectives are\n".$_SESSION['obj']."\ntasks performed are\n".$tasks."\nwhat objectives match the tasks performed?";
-    echo $prompt."<hr>";
+    $prompt = "Objectives are\n".$_SESSION['obj']."\n\nTasks performed are\n".$tasks."\n\nFollowing objectives match the tasks performed";
+    echo "\n---------------COMPLETED-----------------\n";
+    echo $prompt;
+    echo "\n-----------------------------------------\n";
     $result = curl($prompt);
 
     if (array_key_exists("error", $result)) {
@@ -109,11 +111,13 @@ if (isset($_GET["opt"]) && $_GET["opt"]==1) {
       print_r($result);
 
     } else {
-      echo "GOOD<br>";
       $_SESSION["completed"] = trim($result["choices"][0]["text"]);
+      echo $_SESSION["completed"];
 
-      $prompt = "objectives are\n\n".$_SESSION["obj"]."\n\ntasks performed are\n\n".$tasks."\n\nwhat objectives match the tasks performed?\n\n".$_SESSION["completed"]."\n\nwhat objectives were missed?";
-      echo $prompt."<hr>";
+      $prompt = "The objectives are\n".$_SESSION["obj"]."\n\nThe tasks performed are\n".$tasks."\n\nFollowing objectives match the tasks performed.\n".$_SESSION["completed"]."\n\nFollowing objectives were missed.";
+      echo "\n---------------MISSED--------------------\n";
+      echo $prompt;
+      echo "\n-----------------------------------------\n";
       $result = curl($prompt);
 
       if (array_key_exists("error", $result)) {
@@ -122,8 +126,9 @@ if (isset($_GET["opt"]) && $_GET["opt"]==1) {
         print_r($result);
 
       } else {
-        echo "GOOD<br>";
         $_SESSION["missed"] = trim($result["choices"][0]["text"]);
+        echo $_SESSION["missed"];
+
       }
     }
   }

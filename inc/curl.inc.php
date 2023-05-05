@@ -1,15 +1,15 @@
 <?php
-
+// define('TESTING', TRUE);
 include 'session.inc.php';
 
-function curl($prompt) {
+function curl($prompt, $model="text-davinci-003") {
   $ch = curl_init();
 
   curl_setopt($ch, CURLOPT_URL, 'https://api.openai.com/v1/completions');
   curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
   curl_setopt($ch, CURLOPT_POST, 1);
   $post = [
-    "model" => "text-davinci-003",
+    "model" => $model,    // "text-davinci-003",
     "prompt" => $prompt,
     "temperature" => 0,
     "max_tokens" => 500,
@@ -36,13 +36,18 @@ function curl($prompt) {
 }
 
 $apiKey = "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";
-// print_r($_POST);
-
 // Option 1 : Analyse IRP
 // Option 2 : Analyse responder conversation
 
 $prompt = "";
 $section = "";
+$model = "text-davinci-003";
+$_SESSION["model"] = "base";
+
+if ($_POST["model"] != "base") {
+  $model = "davinci:ft-ldgcasolutions:irp-model-001-2023-04-23-09-33-10";
+  $_SESSION["model"] = "model1";
+}
 
 if (isset($_GET["opt"]) && $_GET["opt"]==1) {
   echo "Option 1";
@@ -54,7 +59,8 @@ if (isset($_GET["opt"]) && $_GET["opt"]==1) {
     $_SESSION["irp"] = $_POST['irp'];
     $prompt = "summerise the following playbook into a list of platform independent objectives\n\n".$_POST['irp']."\n\nthe objectives are:";
 
-    $result = curl($prompt);
+    if (defined('TESTING')) $result = ["error" => ["message" => "TESTING"]];
+    else $result = curl($prompt, $model);
 
     if (array_key_exists("error", $result)) {
       // OpenAI API returned an error
@@ -78,7 +84,8 @@ if (isset($_GET["opt"]) && $_GET["opt"]==1) {
     $_SESSION["conv"] = $_POST['conv'];
     $prompt = "What security actions were performed\n\n".$_POST['conv']."\n\nsteps are:";
 
-    $result = curl($prompt);
+    if (defined('TESTING')) $result = ["error" => ["message" => "TESTING"]];
+    else $result = curl($prompt, $model);
 
     if (array_key_exists("error", $result)) {
       // OpenAI API returned an error
@@ -107,7 +114,8 @@ if (isset($_GET["opt"]) && $_GET["opt"]==1) {
     // echo "\n---------------COMPLETED-----------------\n";
     // echo $prompt;
     // echo "\n-----------------------------------------\n";
-    $result = curl($prompt);
+    if (defined('TESTING')) $result = ["error" => ["message" => "TESTING"]];
+    else $result = curl($prompt, $model);
 
     if (array_key_exists("error", $result)) {
       // OpenAI API returned an error
@@ -123,7 +131,8 @@ if (isset($_GET["opt"]) && $_GET["opt"]==1) {
       // echo "\n---------------MISSED--------------------\n";
       // echo $prompt;
       // echo "\n-----------------------------------------\n";
-      $result = curl($prompt);
+      if (defined('TESTING')) $result = ["error" => ["message" => "TESTING"]];
+      else $result = curl($prompt, $model);
 
       if (array_key_exists("error", $result)) {
         // OpenAI API returned an error

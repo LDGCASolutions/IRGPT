@@ -5,6 +5,15 @@
   <a href="/index.php"><h1>IR GPT</h1></a>
   <p>by Team BBQ</p>
   <p>This is an application for evaluating the performance of incident response. GPT-3 LLM is used to identify objectives of a given IRP, tasks accomplished during incident response and finally identify which objectives were met or missed during the process.</p>
+  <h2>
+    Text Davinci 003
+    <label class="switch">
+      <input id="modelSelector" type="checkbox" name="model" value="" <?php echo ($_SESSION["model"]=="model1") ? 'checked="checked"' : ''; ?> >
+      <span class="slider round"></span>
+    </label>
+    Fine Tuned Model
+  </h2>
+
   <?php
     if (isset($_GET['error'])) {
   ?>
@@ -33,6 +42,7 @@
         <p>
           <textarea name="irp" rows="8" cols="80" placeholder="Incident Response Playbook goes here"><?php if (strlen($_SESSION["irp"])) echo $_SESSION["irp"]; ?></textarea>
         </p>
+        <input id="objModel" type="hidden" name="model" <?php echo ($_SESSION["model"]=="model1") ? 'value="model1"' : 'value="base"'; ?>>
         <button type="submit" name="button">Analyse</button>
       </form>
     </div>
@@ -55,6 +65,7 @@
         <p>
           <textarea name="conv" rows="8" cols="80" placeholder="Responder conversation goes here"><?php if (strlen($_SESSION["conv"])) echo $_SESSION["conv"]; ?></textarea>
         </p>
+        <input id="tskModel" type="hidden" name="model" <?php echo ($_SESSION["model"]=="model1") ? 'value="model1"' : 'value="base"'; ?>>
         <button type="submit" name="button">Analyse</button>
       </form>
     </div>
@@ -73,6 +84,7 @@
     <h2>Evaluate the response</h2>
     <p>"Key objectives" and "Key achievements" lists will be analysed to identify objectives that were achieved or missed.</p>
     <form id="missMatch" class="" action="/inc/curl.inc.php?opt=3" method="post">
+      <input id="evalModel" type="hidden" name="model" <?php echo ($_SESSION["model"]=="model1") ? 'value="model1"' : 'value="base"'; ?>>
       <button type="submit" name="button">Analyse</button>
     </form>
   </div>

@@ -57,7 +57,7 @@ if (isset($_GET["opt"]) && $_GET["opt"]==1) {
     exit();
   } else {
     $_SESSION["irp"] = $_POST['irp'];
-    $prompt = "summerise the following playbook into a list of platform independent objectives\n\n".$_POST['irp']."\n\nthe objectives are:";
+    $prompt = "Summerise the following incident response plan into a list of objectives.\n\n".$_POST['irp']."\n\nObjectives:\n";
 
     if (defined('TESTING')) $result = ["error" => ["message" => "TESTING"]];
     else $result = curl($prompt, $model);
@@ -82,7 +82,7 @@ if (isset($_GET["opt"]) && $_GET["opt"]==1) {
     exit();
   } else {
     $_SESSION["conv"] = $_POST['conv'];
-    $prompt = "What security actions were performed\n\n".$_POST['conv']."\n\nsteps are:";
+    $prompt = "Identify the actions performed.\n\n".$_POST['conv']."\n\nActions performed:\n";
 
     if (defined('TESTING')) $result = ["error" => ["message" => "TESTING"]];
     else $result = curl($prompt, $model);
@@ -110,10 +110,11 @@ if (isset($_GET["opt"]) && $_GET["opt"]==1) {
     exit();
   } else {
     $tasks = preg_replace("/\d+\. /", "-", $_SESSION['tasks']); // Remove numbers from TASK list
-    $prompt = "Objectives are\n".$_SESSION['obj']."\n\nTasks performed are\n".$tasks."\n\nFollowing objectives match the tasks performed";
+    $prompt = "objectives are\n".$_SESSION['obj']."\n\ntasks performed are\n".$_SESSION['tasks']."\n\nlist only the objectives matching tasks performed, preserve the objective index";
     // echo "\n---------------COMPLETED-----------------\n";
     // echo $prompt;
     // echo "\n-----------------------------------------\n";
+
     if (defined('TESTING')) $result = ["error" => ["message" => "TESTING"]];
     else $result = curl($prompt, $model);
 
@@ -127,7 +128,7 @@ if (isset($_GET["opt"]) && $_GET["opt"]==1) {
       $_SESSION["completed"] = trim($result["choices"][0]["text"]);
       echo $_SESSION["completed"];
 
-      $prompt = "The objectives are\n".$_SESSION["obj"]."\n\nThe tasks performed are\n".$tasks."\n\nFollowing objectives match the tasks performed.\n".$_SESSION["completed"]."\n\nFollowing objectives were missed.";
+      $prompt = "The objectives are\n".$_SESSION["obj"]."\n\nfollowing objectives were met\n".$_SESSION["completed"]."\n\nfollowing objectives were missed";
       // echo "\n---------------MISSED--------------------\n";
       // echo $prompt;
       // echo "\n-----------------------------------------\n";

@@ -110,7 +110,7 @@ if (isset($_GET["opt"]) && $_GET["opt"]==1) {
     exit();
   } else {
     $tasks = preg_replace("/\d+\. /", "-", $_SESSION['tasks']); // Remove numbers from TASK list
-    $prompt = "objectives are\n".$_SESSION['obj']."\n\ntasks performed are\n".$_SESSION['tasks']."\n\nlist only the objectives matching tasks performed, preserve the objective index";
+    $prompt = "objectives are\n".$_SESSION['obj']."\n\ntasks performed are\n".$tasks."\n\nlist only the objectives matching tasks performed, preserve the objective index";
     // echo "\n---------------COMPLETED-----------------\n";
     // echo $prompt;
     // echo "\n-----------------------------------------\n";

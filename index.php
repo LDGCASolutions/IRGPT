@@ -47,10 +47,10 @@
       </form>
     </div>
     <div class="col">
-      <h2>Key Objectives</h2>
+      <h2 id="objCount">Key Objectives</h2>
       <p>Key objectives identified by LLM are as follows</p>
       <p>
-        <textarea form="missMatch" name="obj" rows="8" cols="80" placeholder="Incident Response Objectives will appear here"><?php if (strlen($_SESSION["obj"])) echo $_SESSION["obj"]; ?></textarea>
+        <textarea form="missMatch" id="objText" name="obj" rows="8" cols="80" placeholder="Incident Response Objectives will appear here"><?php if (strlen($_SESSION["obj"])) echo $_SESSION["obj"]; ?></textarea>
       </p>
       <form class="" action="inc/clear.inc.php" method="post">
         <button type="submit" name="button">Clear</button>
@@ -70,10 +70,10 @@
       </form>
     </div>
     <div class="col">
-      <h2>Key Achievements</h2>
+      <h2 id="tskCount">Key Achievements</h2>
       <p>Key achievements identified by LLM are as follows</p>
       <p>
-        <textarea form="missMatch" name="tasks" rows="8" cols="80" placeholder="Tasks performed will appear here"><?php if (strlen($_SESSION["tasks"])) echo $_SESSION["tasks"]; ?></textarea>
+        <textarea form="missMatch" id="taskText" name="tasks" rows="8" cols="80" placeholder="Tasks performed will appear here"><?php if (strlen($_SESSION["tasks"])) echo $_SESSION["tasks"]; ?></textarea>
       </p>
       <form class="" action="inc/clear.inc.php" method="post">
         <button type="submit" name="button">Clear</button>
@@ -90,12 +90,12 @@
   </div>
   <div class="row">
     <div class="col">
-      <h2>IRP objectives met by the responder</h2>
-      <textarea name="completed" rows="8" cols="80" placeholder="Completed objectives will appear here"><?php if (strlen($_SESSION["completed"])) echo $_SESSION["completed"]; ?></textarea>
+      <h2 id="objMetCount">IRP objectives met by the responder</h2>
+      <textarea id="objMet" name="completed" rows="8" cols="80" placeholder="Completed objectives will appear here"><?php if (strlen($_SESSION["completed"])) echo $_SESSION["completed"]; ?></textarea>
     </div>
     <div class="col">
-      <h2>IRP objectives missed by the responder</h2>
-      <textarea name="missed" rows="8" cols="80" placeholder="Missed objectives will appear here"><?php if (strlen($_SESSION["missed"])) echo $_SESSION["missed"]; ?></textarea>
+      <h2 id="objMissedCount">IRP objectives missed by the responder</h2>
+      <textarea id="objMissed" name="missed" rows="8" cols="80" placeholder="Missed objectives will appear here"><?php if (strlen($_SESSION["missed"])) echo $_SESSION["missed"]; ?></textarea>
     </div>
   </div>
   <div class="">

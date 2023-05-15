@@ -21,7 +21,9 @@ function curl($prompt, $model="text-davinci-003") {
 
   $headers = array();
   $headers[] = 'Content-Type: application/json';
-  $headers[] = 'Authorization: Bearer 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';
+  //$headers[] = 'Authorization: Bearer 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';
+  $headers[] = 'Authorization: Bearer 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';
+
   curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
 
   $result = curl_exec($ch);
@@ -109,8 +111,8 @@ if (isset($_GET["opt"]) && $_GET["opt"]==1) {
     header( 'location: /index.php?error=3' );
     exit();
   } else {
-    $tasks = preg_replace("/\d+\. /", "-", $_SESSION['tasks']); // Remove numbers from TASK list
-    $prompt = "objectives are\n".$_SESSION['obj']."\n\ntasks performed are\n".$tasks."\n\nlist only the objectives matching tasks performed, preserve the objective index";
+    $tasks = preg_replace("/\d+\. /", "- ", $_SESSION['tasks']); // Remove numbers from TASK list
+    $prompt = "objectives are\n".$_SESSION['obj']."\n\ntasks performed are\n".$tasks."\n\nlist only the objectives matching tasks performed\nkeep original objective indexes";
     // echo "\n---------------COMPLETED-----------------\n";
     // echo $prompt;
     // echo "\n-----------------------------------------\n";
@@ -128,7 +130,7 @@ if (isset($_GET["opt"]) && $_GET["opt"]==1) {
       $_SESSION["completed"] = trim($result["choices"][0]["text"]);
       echo $_SESSION["completed"];
 
-      $prompt = "The objectives are\n".$_SESSION["obj"]."\n\nfollowing objectives were met\n".$_SESSION["completed"]."\n\nfollowing objectives were missed";
+      $prompt = "List 1\n".$_SESSION["obj"]."\n\nList2\n".$_SESSION["completed"]."\n\items in List1 but missing in List2";
       // echo "\n---------------MISSED--------------------\n";
       // echo $prompt;
       // echo "\n-----------------------------------------\n";

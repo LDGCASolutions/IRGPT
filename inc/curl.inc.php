@@ -21,8 +21,7 @@ function curl($prompt, $model="text-davinci-003") {
 
   $headers = array();
   $headers[] = 'Content-Type: application/json';
-  //$headers[] = 'Authorization: Bearer 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';
-  $headers[] = 'Authorization: Bearer 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';
+  $headers[] = 'Authorization: Bearer sk-useyourownapikey';
 
   curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
 
